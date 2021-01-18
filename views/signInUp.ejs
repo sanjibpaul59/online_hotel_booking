@@ -20,6 +20,7 @@
 </head>
 
 <body>
+    
 
     <div class="container" id="container">
 
@@ -27,8 +28,9 @@
 
         <div class="form-container sign-up-container" id="sign-up">
 
-            <form action="#"">
+            <form action="/home"">
                 <h1>Create Account</h1>
+                <h3>It's Easy and Simple!</h3>
 
                 <div class=" social-container">
                 <a href="#" class="social"> <i class="fab fa-facebook-f"></i></a>
@@ -36,20 +38,20 @@
         </div>
 
         <div class="form-group">
-            <input type="text" class="form-control" id="name" placeholder="Name">
+            <input type="text" class="form-control" id="upName" placeholder="Name">
         </div>
 
         <div class="form-group">
-            <input type="email" class="form-control" id="email" placeholder="Email">
+            <input type="email" class="form-control" id="upEmail" placeholder="Email">
         </div>
 
         <div class="form-group">
-            <input type="password" class="form-control" id="password" placeholder="Password">
+            <input type="password" class="form-control" id="upPassword" placeholder="Password">
         </div>
 
-        <div class="form-group">
-            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
-        </div>
+
+            <input type="hidden" name="_csrf" value="<%- csrfToken %>">
+     
 
         <button>Sign Up</button>
         </form>
@@ -69,11 +71,11 @@
             </div>
 
             <div class="form-group">
-                <input type="email" class="form-control" id="email" placeholder="Email">
+                <input type="email" class="form-control" id="inEmail" placeholder="Email">
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <input type="password" class="form-control" id="inPassword" placeholder="Password">
             </div>
 
             <button>Sign In</button>
