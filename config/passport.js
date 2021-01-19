@@ -1,7 +1,10 @@
-var passport = require("passport");
-var localStrategy = require("passport-local").Strategy;
 
-var User = require("../models/user.model");
+var passport = require('passport');
+const newLocal = require('passport-local').Strategy;
+var localStrategy = newLocal;
+var mongoose = require('mongoose');
+
+var User = require('../models/user.model');
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -14,21 +17,21 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use(
-  "local-signup",
+  'local.signUp',
   new localStrategy(
     {
-      nameField: "name",
-      emailField: "email",
-      passwordField: "password",
+      nameField: 'name',
+      emailField: 'email',
+      passwordField: 'password',
       passReqToCallback: true,
     },
     function (req, name, email, password, done) {
-      User.findOne({ email: email }, function (err, user) {
+      User.findOne({ email: 'email' }, function (err, user) {
         if (err) {
           return done(err);
         }
         if (user) {
-          return done(null, false, { message: "Email Already In Use" });
+          return done(null, false, { message: 'Email Already In Use' });
         }
         var newUser = new User();
         newUser.name = name;

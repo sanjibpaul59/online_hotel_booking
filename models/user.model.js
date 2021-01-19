@@ -1,30 +1,30 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 
-var bcrypt = require("bcrypt-nodejs");
+var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Name Required"],
+    required: [true, 'Name Required'],
   },
   email: {
     type: String,
-    requied: [true, "Email Required"],
+    requied: [true, 'Email Required'],
   },
   password: {
     type: String,
-    required: [true, "Password Required"],
+    required: [true, 'Password Required'],
   },
 });
 
 UserSchema.methods.encryptPassword = function (password) {
-  return bcrypt.hashSync(password, bcrypt.genSalt(12), null);
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(12), null);
 };
 
 UserSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-var User = mongoose.model("User", UserSchema);
+var User = mongoose.model('User', UserSchema);
 
 module.exports = User;
