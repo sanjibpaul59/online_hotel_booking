@@ -1,10 +1,8 @@
-
 var passport = require('passport');
+var User = require('../models/user.model');
 const newLocal = require('passport-local').Strategy;
 var localStrategy = newLocal;
-var mongoose = require('mongoose');
 
-var User = require('../models/user.model');
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -16,17 +14,17 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
+
 passport.use(
-  'local.signUp',
+  'local.signup',
   new localStrategy(
     {
-      nameField: 'name',
-      emailField: 'email',
+      usernameField: 'name',
+      useremailField: 'email',
       passwordField: 'password',
       passReqToCallback: true,
     },
-    function (req, name, email, password, done) {
-      User.findOne({ email: 'email' }, function (err, user) {
+      User.findOne({ 'email': email }, function (err, user) {
         if (err) {
           return done(err);
         }
@@ -43,7 +41,29 @@ passport.use(
           }
           return done(null, newUser);
         });
-      });
-    }
-  )
-);
+      })));
+
+
+    passport.use('local.signin', new localStrategy({
+      useremailField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true
+    },
+      User.findOne({'email': email},function(err, user){
+        if(err){
+          return done(err);
+        }
+        if(!user){
+          return done(null, false, {message: 'No User Found'});
+        }
+        if(!user.validPassword(password)){
+          return done(null, false, {message: 'Invalid Password'});
+        }
+        return done(null, user);
+      })))
+
+
+
+
+
+
